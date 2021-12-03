@@ -541,7 +541,7 @@ class Binance
         }
     }
 
-    public function getBinanceSpotApiClient(?string $keyPublic, string $keySecret): BinanceApiClient
+    public function getBinanceSpotApiClient(?string $keyPublic = null, ?string $keySecret = null): BinanceApiClient
     {
         if (empty($keyPublic)) {
             $keyPublic = $this->getBinanceKey('BINANCE_SPOT1_TOKEN_PUB');
@@ -606,7 +606,7 @@ class Binance
 
     public static function getChatId(): string
     {
-        return env('CHAT_ID');
+        return (int)env('CHAT_ID');
     }
 
     public static  function getTelegramBotToken(): string

@@ -736,19 +736,19 @@ class CryptoPortfolioController extends Controller
 
     public function checkChatIsCorrect(int $chatId): void
     {
-        if (Binance::getChatId() !== $chatId) {
-            $this->getBinanceSpotApiClient()->sendMessage($chatId, 'No data');
+        if ((int)Binance::getChatId() !== $chatId) {
+            $this->getTelegramClient()->sendMessage($chatId, 'No data');
             die;
         }
     }
 
-    public function getBinanceSpotApiClient(?string $keyPublic, string $keySecret): BinanceApiClient
+    public function getBinanceSpotApiClient(?string $keyPublic = null, ?string $keySecret = null): BinanceApiClient
     {
         if (empty($keyPublic)) {
-            $keyPublic = $this->getBinanceKey('BINANCE_SPOT1_TOKEN_PUB');
+            $keyPublic = Binance::getBinanceKey('BINANCE_SPOT1_TOKEN_PUB');
         }
         if (empty($keySecret)) {
-            $keySecret = $this->getBinanceKey('BINANCE_SPOT1_TOKEN_SECRET');
+            $keySecret = Binance::getBinanceKey('BINANCE_SPOT1_TOKEN_SECRET');
         }
         return new BinanceApiClient($keyPublic, $keySecret);
     }
